@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nistbook | Register</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+    <style>
+        :root {
+            --primary-yellow: #ffd700;
+            --primary-dark: #e6c200;
+            --bg: #f5f7fa;
+            --card: rgba(255, 255, 255, 0.85);
+            --text: #1a1a1a;
+            --gray: #666;
+            --border: #ddd;
+            --shadow: 0 12px 40px rgba(0,0,0,0.15);
+            --success: #4caf50;
+            --warning: #ff9800;
+            --danger: #f44336;
+        }
+
+        body.dark {
+            --bg: #0d1117;
+            --card: rgba(30, 30, 46, 0.85);
+            --text: #e6e6e6;
+            --gray: #aaa;
+            --border: #333;
+            --shadow: 0 12px 40px rgba(0,0,0,0.5);
+        }
+
+        * { margin:0; padding:0; box-sizing:border-box; }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            transition: background 0.6s ease, color 0.6s ease;
+        }
+
+        .container {
+            background: var(--card);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 24px;
+            padding: 48px 40px;
+            width: 100%;
+            max-width: 520px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: all 0.4s ease;
+        }
+
+        .title {
+            text-align: center;
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--primary-yellow);
+            margin-bottom: 8px;
+            letter-spacing: -1px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--gray);
+            margin-bottom: 32px;
+            font-size: 1.15rem;
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 40px;
+        }
+
+        .progress-step {
+            flex: 1;
+            height: 8px;
+            background: var(--border);
+            border-radius: 4px;
+            transition: background 0.5s ease;
+        }
+
+        .progress-step.active {
+            background: var(--primary-yellow);
+        }
+
+        /* Steps */
+        .step {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .step.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        label {
+            display: block;
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--gray);
+        }
+
+        input {
+            width: 100%;
+            padding: 16px 20px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            font-size: 1.05rem;
+            background: transparent;
+            color: var(--text);
+            transition: all 0.3s ease;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--primary-yellow);
+            box-shadow: 0 0 0 4px rgba(255,215,0,0.25);
+        }
+
+        .password-wrapper {
+            position: relative;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: var(--gray);
+            font-size: 1.3rem;
+            transition: color 0.3s;
+        }
+
+        .toggle-password:hover {
+            color: var(--primary-yellow);
+        }
+
+        .strength {
+            font-size: 0.9rem;
+            margin-top: 8px;
+            transition: color 0.4s ease;
+        }
+
+        .error {
+            color: var(--danger);
+            font-size: 0.9rem;
+            margin-top: 6px;
+            display: none;
+        }
+
+        /* Buttons */
+        .btn {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.15rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 16px 0;
+        }
+
+        .btn-primary {
+            background: var(--primary-yellow);
+            color: #000;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid var(--primary-yellow);
+            color: var(--primary-yellow);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary-yellow);
+            color: #000;
+        }
+
+        .toggle-mode {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: var(--gray);
+            transition: color 0.3s;
+        }
+
+        .toggle-mode:hover {
+            color: var(--primary-yellow);
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 32px;
+            font-size: 1rem;
+            color: var(--gray);
+        }
+
+        .login-link a {
+            color: var(--primary-yellow);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .container {
+                padding: 32px 24px;
+            }
+            .title {
+                font-size: 2.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="toggle-mode" onclick="document.body.classList.toggle('dark')">🌙</div>
+
+    <div class="container">
+        <div class="title">Join Nistbook</div>
+        <p class="subtitle">Create your account in 3 easy steps</p>
+
+        <div class="progress-bar">
+            <div class="progress-step active" id="p1"></div>
+            <div class="progress-step" id="p2"></div>
+            <div class="progress-step" id="p3"></div>
+        </div>
+
+        <!-- Step 1: Basic Info -->
+        <div class="step active" id="s1">
+            <label>First Name *</label>
+            <input type="text" id="fname" required>
+            <div class="error" id="e1"></div>
+
+            <label>Middle Name (Optional)</label>
+            <input type="text">
+
+            <label>Last Name *</label>
+            <input type="text" id="lname" required>
+            <div class="error" id="e2"></div>
+
+            <button class="btn btn-primary" onclick="validateStep1()">Next</button>
+        </div>
+
+        <!-- Step 2: Contact Info -->
+        <div class="step" id="s2">
+            <label>Email or Gmail *</label>
+            <input type="email" id="email" required>
+            <div class="error" id="e3"></div>
+
+            <label>Phone Number (with country code) *</label>
+            <input type="tel" id="phone" required>
+            <div class="error" id="e4"></div>
+
+            <div style="display:flex;gap:16px;">
+                <button class="btn btn-secondary" onclick="prevStep(2)">Back</button>
+                <button class="btn btn-primary" onclick="validateStep2()">Next</button>
+            </div>
+        </div>
+
+        <!-- Step 3: Password & Final -->
+        <div class="step" id="s3">
+            <label>Create Strong Password *</label>
+            <div class="password-wrapper">
+                <input type="password" id="password" required oninput="checkStrength()">
+                <span class="toggle-password" onclick="togglePass()">👁️</span>
+            </div>
+            <div class="strength" id="strength"></div>
+
+            <label>Confirm Password *</label>
+            <input type="password" id="confirm" required>
+
+            <div class="error" id="e5"></div>
+
+            <div style="display:flex;gap:16px;">
+                <button class="btn btn-secondary" onclick="prevStep(3)">Back</button>
+                <button class="btn btn-primary" onclick="register()">Create Account</button>
+            </div>
+
+            <p class="login-link">
+                Already have an account? <a href="index.html">Log In</a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        let currentStep = 1;
+
+        function showStep(n) {
+            document.querySelectorAll('.step').forEach(s => s.style.display = 'none');
+            document.getElementById(`s${n}`).style.display = 'block';
+
+            for (let i = 1; i <= 3; i++) {
+                document.getElementById(`p${i}`).classList.toggle('active', i <= n);
+            }
+        }
+
+        function validateStep1() {
+            const fname = document.getElementById('fname').value.trim();
+            const lname = document.getElementById('lname').value.trim();
+            document.getElementById('e1').style.display = fname ? 'none' : 'block';
+            document.getElementById('e2').style.display = lname ? 'none' : 'block';
+            if (fname && lname) {
+                currentStep = 2;
+                showStep(2);
+            }
+        }
+
+        function validateStep2() {
+            const email = document.getElementById('email').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            document.getElementById('e3').style.display = email ? 'none' : 'block';
+            document.getElementById('e4').style.display = phone ? 'none' : 'block';
+            if (email && phone) {
+                currentStep = 3;
+                showStep(3);
+            }
+        }
+
+        function prevStep() {
+            if (currentStep > 1) {
+                currentStep--;
+                showStep(currentStep);
+            }
+        }
+
+        function togglePass() {
+            const pass = document.getElementById('password');
+            const icon = document.querySelector('.toggle-password');
+            pass.type = pass.type === 'password' ? 'text' : 'password';
+            icon.textContent = pass.type === 'text' ? '🙈' : '👁️';
+        }
+
+        function checkStrength() {
+            const pass = document.getElementById('password').value;
+            const strength = document.getElementById('strength');
+            let msg = '', color = '';
+
+            if (pass.length === 0) {
+                strength.style.color = 'gray';
+                strength.textContent = '';
+                return;
+            }
+
+            if (pass.length < 6) {
+                msg = 'Weak';
+                color = 'var(--danger)';
+            } else if (pass.length < 10 || !/[A-Z]/.test(pass) || !/[0-9]/.test(pass)) {
+                msg = 'Medium';
+                color = 'var(--warning)';
+            } else {
+                msg = 'Strong';
+                color = 'var(--success)';
+            }
+
+            strength.style.color = color;
+            strength.textContent = msg + ' password';
+        }
+
+        function register() {
+            const pass = document.getElementById('password').value;
+            const confirm = document.getElementById('confirm').value;
+            const error = document.getElementById('e5');
+
+            if (pass !== confirm) {
+                error.textContent = "Passwords do not match!";
+                error.style.display = 'block';
+                return;
+            }
+
+            if (pass.length < 8) {
+                error.textContent = "Password must be at least 8 characters";
+                error.style.display = 'block';
+                return;
+            }
+
+            error.style.display = 'none';
+            window.location.href = 'Firstpage.html';
+            alert("🎉 Registration Successful!\nNow you can login!");
+        }
+    </script>
+</body>
+</html>

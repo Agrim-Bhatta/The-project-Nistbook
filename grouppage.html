@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Nistbook | Groups & Friends</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    :root {
+      --golden: #ffd700;
+      --blue: #1877f2;
+      --bg: #f0f2f5;
+      --card: #ffffff;
+      --dark-bg: #18191a;
+      --dark-card: #242526;
+      --dark-text: #e4e6eb;
+      --dark-border: #3a3b3c;
+      --gray: #606770;
+    }
+
+    /* Base */
+    * { box-sizing: border-box; }
+    body { margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; background:var(--bg); color:var(--gray); }
+    body.dark { background:var(--dark-bg); color:var(--dark-text); }
+
+    /* Top Nav */
+    .top-nav {
+      position:fixed; top:0; left:0; right:0; height:64px;
+      background:var(--card); border-bottom:1px solid #ddd;
+      display:flex; justify-content:space-between; align-items:center;
+      padding:0 24px; box-shadow:0 2px 12px rgba(0,0,0,0.08); z-index:1000;
+    }
+    body.dark .top-nav { background:var(--dark-card); border-bottom:1px solid var(--dark-border); }
+    .logo { font-size:28px; font-weight:900; color:var(--golden); }
+    .nav-icons { display:flex; gap:32px; }
+    .nav-icons a { font-size:22px; color:var(--gray); text-decoration:none; padding:8px 10px; border-radius:8px; transition:.2s ease; }
+    body.dark .nav-icons a { color:var(--dark-text); }
+    .nav-icons a:hover, .nav-icons a.active { background:rgba(255,215,0,0.12); color:var(--golden); }
+    .right-icons { display:flex; gap:16px; }
+    .icon-btn {
+      width:40px; height:40px; border-radius:50%;
+      display:grid; place-items:center; background:var(--bg);
+      cursor:pointer; transition:.2s ease;
+    }
+    body.dark .icon-btn { background:#3a3b3c; color:var(--dark-text); }
+    .icon-btn:hover { background:var(--golden); color:#000; }
+
+    /* Center Feed */
+    .center-feed { margin-top:64px; max-width:720px; margin:auto; padding:32px 20px; }
+
+    /* Title Box */
+    .title-box {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 28px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      text-align: center;
+    }
+    body.dark .title-box { background: var(--dark-card); }
+    .title-box h1 { margin:0; font-size:26px; font-weight:800; color:var(--golden); }
+    .title-box p { margin-top:8px; font-size:15px; color:var(--gray); }
+    body.dark .title-box p { color:var(--dark-text); }
+
+    h2 { color:var(--golden); margin:24px 0 16px; font-size:22px; }
+
+    /* Shared card style */
+    .card {
+      background:var(--card); border-radius:12px; padding:20px; margin-bottom:20px;
+      box-shadow:0 2px 12px rgba(0,0,0,0.08); transition:transform .2s ease;
+    }
+    body.dark .card { background:var(--dark-card); }
+    .card:hover { transform:translateY(-2px); }
+
+    /* Group cards */
+    .group-card h3 { margin:0 0 8px; color:var(--blue); }
+    .group-card p { margin:0 0 12px; }
+    .group-card button {
+      background:var(--golden); border:none; padding:10px 16px; border-radius:8px;
+      font-weight:600; cursor:pointer; transition:.2s ease;
+    }
+    .group-card button:hover { background:#e6c200; }
+
+    /* Friend requests */
+    .request-card { display:flex; align-items:center; justify-content:space-between; }
+    .request-info { display:flex; align-items:center; gap:12px; }
+    .request-info img { width:48px; height:48px; border-radius:50%; }
+    .request-actions button {
+      margin-left:8px; padding:8px 14px; border:none; border-radius:8px;
+      cursor:pointer; font-weight:600; transition:background .2s ease;
+    }
+    .accept { background:#4CAF50; color:#fff; }
+    .accept:hover { background:#3e8e41; }
+    .decline { background:#ff4d4d; color:#fff; }
+    .decline:hover { background:#d93636; }
+
+    /* Responsive */
+    @media (max-width:640px) {
+      .center-feed { padding:24px 14px; }
+      .request-card { flex-direction:column; align-items:flex-start; gap:12px; }
+      .request-actions { width:100%; display:flex; justify-content:flex-end; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Nav -->
+  <div class="top-nav">
+    <div class="logo">Nistbook</div>
+    <div class="nav-icons">
+      <a href="Firstpage.html"><i class="fas fa-home"></i></a>
+      <a href="reelpage.html"><i class="fas fa-play-circle"></i></a>
+      <a href="groupfriends.html" class="active"><i class="fas fa-users"></i></a>
+      <a href="marketplacepage.html"><i class="fas fa-shopping-bag"></i></a>
+      <a href="profilepage.html"><i class="fas fa-user"></i></a>
+      <a href="settingpage.html"><i class="fas fa-cog"></i></a>
+    </div>
+    <div class="right-icons">
+      <div class="icon-btn"><i class="fas fa-bell"></i></div>
+      <div class="icon-btn"><i class="fas fa-comment-dots"></i></div>
+      <div class="icon-btn" id="darkToggle" aria-label="Toggle dark mode"><i class="fas fa-moon"></i></div>
+    </div>
+  </div>
+
+  <!-- Combined Center Feed -->
+  <main class="center-feed">
+
+    <!-- Title Box -->
+    <div class="title-box">
+      <h1>Groups & Friend Requests</h1>
+      <p>Join study groups and connect with classmates</p>
+    </div>
+
+    <!-- Groups Section -->
+    <h2>Study Groups</h2>
+    <div class="card group-card">
+      <h3>Physics Study Group</h3>
+      <p>Discuss mechanics, optics, and quantum physics with peers.</p>
+      <button onclick="alert('Joined Physics Study Group!')">Join Group</button>
+    </div>
+    <div class="card group-card">
+      <h3>Math Problem Solvers</h3>
+      <p>Collaborate on calculus, algebra, and geometry challenges.</p>
+      <button onclick="alert('Joined Math Problem Solvers!')">Join Group</button>
+    </div>
+    <div class="card group-card">
+      <h3>Exam Motivation</h3>
+      <p>Share tips, motivation, and study hacks before exams.</p>
+      <button onclick="alert('Joined Exam Motivation Group!')">Join Group</button>
+    </div>
+
+    <!-- Friend Requests Section -->
+    <h2>Friend Requests</h2>
+    <div class="card request-card">
+      <div class="request-info">
+        <img src="https://randomuser.me/api/portraits/women/45.jpg" alt="Profile">
+        <div>
+          <strong>Sita Thapa</strong><br>
+          <span style="color:var(--gray);">Grade 12 Science</span>
+        </div>
+      </div>
+      <div class="request-actions">
+        <button class="accept" onclick="handleAccept(this)">Accept</button>
+        <button class="decline" onclick="handleDecline(this)">Decline</button>
+      </div>
+    </div>
+
+    <div class="card request-card">
+      <div class="request-info">
+        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Profile">
+        <div>
+          <strong>Arjun Karki</strong><br>
+          <span style="color:var(--gray);">Grade 11 Math</span>
+        </div>
+      </div>
+      <div class="request-actions">
+        <button class="accept" onclick="handleAccept(this)">Accept</button>
+        <button class="decline" onclick="handleDecline(this)">Decline</button>
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    // Dark Mode Toggle
+    document.getElementById('darkToggle').addEventListener('click', function() {
+      document.body.classList.toggle('dark');
+      const icon = this.querySelector('i');
+      icon.classList.toggle('fa-moon');
+      icon.classList.toggle('fa-sun');
+    });
+
+    // Friend request actions
+    function handleAccept(btn) {
+      const card = btn.closest('.request-card');
+      card.style.opacity = '0';
+      setTimeout(() => card.remove(), 200);
+      alert('Friend request accepted!');
+    }
+    function handleDecline(btn) {
+      const card = btn.closest('.request-card');
+      card.style.opacity = '0';
+      setTimeout(() => card.remove(), 200);
+      alert('Friend request declined.');
+    }
+  </script>
+</body>
+</html>

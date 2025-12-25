@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Nistbook | Marketplace</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    :root {
+      --golden: #ffd700;
+      --blue: #1877f2;
+      --bg: #f0f2f5;
+      --dark-bg: #18191a;
+      --dark-card: rgba(36,37,38,0.8);
+      --dark-text: #e4e6eb;
+      --gray: #606770;
+    }
+    body { margin:0; font-family:system-ui; background:var(--bg); color:var(--gray); }
+    body.dark { background:var(--dark-bg); color:var(--dark-text); }
+
+    /* Top Nav */
+    .top-nav {
+      position:fixed; top:0; left:0; right:0; height:64px;
+      backdrop-filter: blur(10px);
+      background:rgba(255,255,255,0.7);
+      display:flex; justify-content:space-between; align-items:center;
+      padding:0 24px; box-shadow:0 2px 12px rgba(0,0,0,0.08); z-index:1000;
+    }
+    body.dark .top-nav { background:rgba(36,37,38,0.7); }
+    .logo { font-size:28px; font-weight:900; color:var(--golden); }
+    .nav-icons { display:flex; gap:28px; }
+    .nav-icons a { font-size:22px; color:var(--gray); text-decoration:none; padding:8px 10px; border-radius:8px; transition:.2s ease; }
+    body.dark .nav-icons a { color:var(--dark-text); }
+    .nav-icons a:hover, .nav-icons a.active { background:linear-gradient(90deg,var(--golden),var(--blue)); color:#000; }
+    .right-icons { display:flex; gap:16px; }
+    .icon-btn { width:40px; height:40px; border-radius:50%; display:grid; place-items:center; background:rgba(255,255,255,0.6); cursor:pointer; transition:.2s ease; }
+    body.dark .icon-btn { background:rgba(58,59,60,0.6); color:var(--dark-text); }
+    .icon-btn:hover { background:var(--golden); color:#000; transform:scale(1.1); }
+
+    /* Center Feed */
+    .center-feed { margin-top:64px; max-width:1000px; margin:auto; padding:32px 20px; }
+
+    /* Title Box */
+    .title-box {
+      background: linear-gradient(270deg,var(--golden),var(--blue),var(--golden));
+      background-size: 600% 600%;
+      animation: gradientMove 12s ease infinite;
+      border-radius: 14px;
+      padding: 24px;
+      margin-bottom: 32px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+      text-align: center;
+      color:#000;
+    }
+    @keyframes gradientMove {
+      0%{background-position:0% 50%}
+      50%{background-position:100% 50%}
+      100%{background-position:0% 50%}
+    }
+    body.dark .title-box { color:var(--dark-text); }
+    .title-box h1 { margin:0; font-size:28px; font-weight:800; }
+    .title-box p { margin-top:8px; font-size:15px; }
+
+    /* Search + Add */
+    .market-tools { display:flex; justify-content:space-between; margin-bottom:24px; gap:12px; }
+    .search-bar { flex:1; padding:10px; border-radius:8px; border:1px solid #ccc; }
+    .add-btn {
+      background:var(--golden); border:none; padding:10px 16px; border-radius:8px;
+      font-weight:600; cursor:pointer; transition:.2s ease;
+    }
+    .add-btn:hover { background:#e6c200; }
+
+    /* Marketplace Grid */
+    .market-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:20px; }
+    .item-card {
+      backdrop-filter: blur(10px);
+      background:rgba(255,255,255,0.8);
+      border-radius:14px; padding:20px;
+      box-shadow:0 2px 12px rgba(0,0,0,0.08);
+      transition:.2s ease;
+    }
+    body.dark .item-card { background:var(--dark-card); }
+    .item-card:hover { transform:translateY(-4px); box-shadow:0 6px 20px rgba(0,0,0,0.15); }
+    .item-card img { width:100%; height:180px; object-fit:cover; border-radius:10px; margin-bottom:12px; }
+    .item-card h3 { margin:0 0 8px; color:var(--blue); }
+    .item-card p { margin:0 0 12px; }
+    .price { font-weight:700; color:var(--golden); margin-bottom:12px; }
+    .seller { display:flex; align-items:center; gap:8px; margin-bottom:12px; }
+    .seller img { width:32px; height:32px; border-radius:50%; }
+    .buy-btn {
+      background:var(--blue); color:#fff; border:none; padding:10px 16px;
+      border-radius:8px; font-weight:600; cursor:pointer; transition:.2s ease;
+    }
+    .buy-btn:hover { background:#145dbf; }
+
+    /* Responsive */
+    @media (max-width:640px) {
+      .center-feed { padding:24px 14px; }
+      .market-tools { flex-direction:column; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Nav -->
+  <div class="top-nav">
+    <div class="logo">Nistbook</div>
+    <div class="nav-icons">
+      <a href="Firstpage.html"><i class="fas fa-home"></i></a>
+      <a href="reelpage.html"><i class="fas fa-play-circle"></i></a>
+      <a href="groupfriends.html"><i class="fas fa-users"></i></a>
+      <a href="marketplacepage.html" class="active"><i class="fas fa-shopping-bag"></i></a>
+      <a href="profilepage.html"><i class="fas fa-user"></i></a>
+      <a href="settingpage.html"><i class="fas fa-cog"></i></a>
+    </div>
+    <div class="right-icons">
+      <div class="icon-btn"><i class="fas fa-bell"></i></div>
+      <div class="icon-btn"><i class="fas fa-comment-dots"></i></div>
+      <div class="icon-btn" id="darkToggle"><i class="fas fa-moon"></i></div>
+    </div>
+  </div>
+
+  <!-- Marketplace Content -->
+  <main class="center-feed">
+
+    <!-- Title Box -->
+    <div class="title-box">
+      <h1>Marketplace</h1>
+      <p>Buy and sell old books with classmates</p>
+    </div>
+
+    <!-- Tools -->
+    <div class="market-tools">
+      <input type="text" class="search-bar" placeholder="Search books...">
+      <button class="add-btn" onclick="alert('Listing form coming soon!')"><i class="fas fa-plus"></i> Add Listing</button>
+    </div>
+
+    <!-- Items Grid -->
+    <div class="market-grid">
+      <div class="item-card">
+        <img src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f" alt="Physics Book">
+        <h3>Physics Textbook</h3>
+        <p>Grade 12 Physics reference book, lightly used.</p>
+        <div class="price">Rs. 500</div>
+        <div class="seller"><img src="https://randomuser.me/api/portraits/men/32.jpg" alt=""> <span>Arjun Karki</span></div>
+ <button class="buy-btn" onclick="alert('Contact seller to purchase!')" >Buy Now</button>
+      </div>
+
+      <div class="item-card">
+        <img src="https://images.unsplash.com/photo-1512820790803-83ca734da794" alt="Math Book">
+        <h3>Mathematics Guide</h3>
+        <p>Complete guide for calculus and algebra, second-hand.</p>
+        <div class="price">Rs. 400</div>
+        <div class="seller"><img src="https://randomuser.me/api/portraits/women/45.jpg" alt=""> <span>Sita Sharma</span></div>
+        <button class="buy-btn" onclick="alert('Contact seller to purchase!')">Buy Now</button>
+      </div>
+
+      <div class="item-card">
+        <img src="https://images.unsplash.com/photo-1528209392022-6c4f6f1b7d5a" alt="Chemistry Book">
+        <h3>Chemistry Workbook</h3>
+        <p>Practice problems and solutions, good condition.</p>
+        <div class="price">Rs. 350</div>
+        <div class="seller"><img src="https://randomuser.me/api/portraits/men/12.jpg" alt=""> <span>Prakash Thapa</span></div>
+        <button class="buy-btn" onclick="alert('Contact seller to purchase!')">Buy Now</button>
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    // Dark Mode Toggle
+    document.getElementById('darkToggle').addEventListener('click', function() {
+      document.body.classList.toggle('dark');
+      const icon = this.querySelector('i');
+      icon.classList.toggle('fa-moon');
+      icon.classList.toggle('fa-sun');
+    });
+
+    // Simple search filter
+    const searchBar = document.querySelector('.search-bar');
+    searchBar.addEventListener('input', () => {
+      const term = searchBar.value.toLowerCase();
+      document.querySelectorAll('.item-card').forEach(card => {
+        const text = card.innerText.toLowerCase();
+        card.style.display = text.includes(term) ? 'block' : 'none';
+      });
+    });
+  </script>
+</body>
+</html>

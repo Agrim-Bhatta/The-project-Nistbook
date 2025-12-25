@@ -1,0 +1,1475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Nistbook - Final Working Version</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+  <style>
+    :root {
+      --golden: #ffd700;
+      --blue: #1877f2;
+      --bg: #f0f2f5;
+      --card: #ffffff;
+      --text: #050505;
+      --border: #dddfe2;
+      --dark-bg: #18191a;
+      --dark-card: #242526;
+      --dark-text: #e4e6eb;
+      --dark-border: #3a3b3c;
+      --gray: #606770;
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      transition: all 0.4s ease;
+    }
+
+    body.dark {
+      background: var(--dark-bg);
+      color: var(--dark-text);
+    }
+
+    .top-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 64px;
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      z-index: 1000;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    }
+
+    body.dark .top-nav {
+      background: var(--dark-card);
+      border-bottom: 1px solid var(--dark-border);
+    }
+
+    .logo {
+      font-size: 34px;
+      font-weight: 900;
+      color: var(--golden);
+    }
+
+    .nav-icons {
+      display: flex;
+      gap: 60px;
+    }
+
+    .nav-icons a {
+      color: var(--text);
+      font-size: 28px;
+      text-decoration: none;
+      padding: 8px 12px;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+    }
+
+    body.dark .nav-icons a { color: var(--dark-text); }
+    .nav-icons a:hover,
+    .nav-icons a.active {
+      background: rgba(255,215,0,0.12);
+      color: var(--golden);
+    }
+
+    .right-icons {
+      display: flex;
+      gap: 20px;
+    }
+
+    .icon-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg);
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    body.dark .icon-btn { background: #3a3b3c; color: var(--dark-text); }
+
+    .icon-btn:hover {
+      background: var(--golden);
+      color: black;
+      transform: scale(1.15);
+    }
+
+    /* Small fix for better spacing */
+    .auth-link {
+      padding: 8px 12px;
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 600;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+
+    body.dark .auth-link {
+      color: var(--dark-text);
+    }
+
+    .auth-link:hover {
+      background: var(--golden);
+      color: black;
+    }
+
+    /* Rest of your styles (unchanged) */
+    .app-container { max-width: 1600px; margin: 64px auto 0; display: flex; height: calc(100vh - 64px); overflow: hidden; }
+     .left-sidebar {
+      width: 360px;
+      background: var(--card);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      padding: 20px;
+      flex-shrink: 0;
+    }
+
+    body.dark .left-sidebar {
+      background: var(--dark-card);
+      border-right: 1px solid var(--dark-border);
+    }
+
+    .sidebar-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--golden);
+      margin: 24px 0 16px;
+    }
+
+    .chat-item {
+      display: flex;
+      align-items: center;
+      padding: 12px;
+      border-radius: 12px;
+      margin-bottom: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .chat-item:hover {
+      background: rgba(255,215,0,0.1);
+    }
+    .chat-avatar {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      margin-right: 16px;
+    }
+
+    .center-feed {
+      flex: 1;
+      max-width: 680px;
+      margin: 0 auto;
+      overflow-y: auto;
+      padding: 20px 0;
+      background: var(--bg);
+    }
+
+    body.dark .center-feed {
+      background: var(--dark-bg);
+
+    }
+
+
+
+    .stories-container {
+
+      display: flex;
+
+      gap: 12px;
+
+      overflow-x: auto;
+
+      padding-bottom: 20px;
+
+      margin-bottom: 28px;
+
+      scrollbar-width: none;
+
+    }
+
+
+
+    .stories-container::-webkit-scrollbar { display: none; }
+
+
+
+    .story {
+
+      flex: 0 0 112px;
+
+      height: 200px;
+
+      border-radius: 16px;
+
+      overflow: hidden;
+
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+
+      position: relative;
+
+      transition: all 0.4s ease;
+
+      cursor: pointer;
+
+    }
+
+
+
+    .story:hover {
+
+      transform: scale(1.08);
+
+    }
+
+
+
+    .story img {
+
+      width: 100%;
+
+      height: 100%;
+
+      object-fit: cover;
+
+    }
+
+
+
+    .story-name {
+
+      position: absolute;
+
+      bottom: 12px;
+
+      left: 12px;
+
+      color: white;
+
+      font-weight: 600;
+
+      text-shadow: 0 1px 4px black;
+
+    }
+
+
+
+    .create-post {
+
+      background: var(--card);
+
+      border-radius: 12px;
+
+      padding: 16px;
+
+      margin-bottom: 24px;
+
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+
+    }
+
+
+
+    body.dark .create-post {
+
+      background: var(--dark-card);
+
+    }
+
+
+
+    .create-input {
+
+      width: 100%;
+
+      padding: 14px 20px;
+
+      border: none;
+
+      background: #f0f2f5;
+
+      border-radius: 50px;
+
+      font-size: 17px;
+
+      outline: none;
+
+    }
+
+
+
+    body.dark .create-input {
+
+      background: #3a3b3c;
+
+      color: var(--dark-text);
+
+    }
+
+
+
+    .post {
+
+      background: var(--card);
+
+      border-radius: 12px;
+
+      padding: 16px;
+
+      margin-bottom: 24px;
+
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+
+    }
+
+
+
+    body.dark .post {
+
+      background: var(--dark-card);
+
+    }
+
+
+
+    .post-header {
+
+      display: flex;
+
+      align-items: center;
+
+      margin-bottom: 12px;
+
+    }
+
+
+
+    .post-avatar {
+
+      width: 48px;
+
+      height: 48px;
+
+      border-radius: 50%;
+
+      margin-right: 12px;
+
+    }
+
+
+
+    .post-actions {
+
+      display: flex;
+
+      justify-content: space-between;
+
+      margin-top: 16px;
+
+      color: var(--gray);
+
+      font-weight: 600;
+
+    }
+
+
+
+    .action-btn {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 8px;
+
+      cursor: pointer;
+
+      padding: 8px 16px;
+
+      border-radius: 8px;
+
+      transition: all 0.3s ease;
+
+    }
+
+
+
+    .action-btn:hover {
+
+      background: rgba(255,215,0,0.1);
+
+    }
+
+
+
+    .right-panel {
+
+      width: 360px;
+
+      background: var(--card);
+
+      border-left: 1px solid var(--border);
+
+      overflow-y: auto;
+
+      padding: 20px;
+
+      flex-shrink: 0;
+
+      position: relative;
+
+    }
+
+
+
+    body.dark .right-panel {
+
+      background: var(--dark-card);
+
+      border-left: 1px solid var(--dark-border);
+
+    }
+
+
+
+    .right-title {
+
+      font-size: 22px;
+
+      font-weight: bold;
+
+      color: var(--golden);
+
+      margin-bottom: 24px;
+
+      text-align: center;
+
+    }
+
+
+
+    .tools-grid {
+
+      display: grid;
+
+      grid-template-columns: 1fr 1fr;
+
+      gap: 16px;
+
+      margin-bottom: 32px;
+
+    }
+
+
+
+    .tool-card {
+
+      background: rgba(255,215,0,0.1);
+
+      border-radius: 12px;
+
+      padding: 16px;
+
+      text-align: center;
+
+      cursor: pointer;
+
+      transition: all 0.3s ease;
+
+    }
+
+
+
+    body.dark .tool-card {
+
+      background: rgba(255,215,0,0.2);
+
+    }
+
+
+
+    .tool-card:hover {
+
+      background: var(--golden);
+
+      color: #000;
+
+      transform: translateY(-6px);
+
+    }
+
+
+
+    .tool-icon {
+
+      font-size: 36px;
+
+      margin-bottom: 8px;
+
+      color: var(--golden);
+
+    }
+
+
+
+    /* Tool Panels - Open in right sidebar */
+
+    .tool-panel {
+
+      display: none;
+
+      background: var(--card);
+
+      border-radius: 12px;
+
+      padding: 20px;
+
+      margin-top: 20px;
+
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+
+    }
+
+
+
+    body.dark .tool-panel {
+
+      background: var(--dark-card);
+
+    }
+
+
+
+    .tool-panel.active {
+
+      display: block;
+
+    }
+
+
+
+    .tool-close {
+
+      float: right;
+
+      cursor: pointer;
+
+      font-size: 24px;
+
+      color: var(--gray);
+
+    }
+
+
+
+    /* AI Chat */
+
+    .ai-chat-box {
+
+      background: rgba(24,119,242,0.05);
+
+      border-radius: 12px;
+
+      padding: 16px;
+
+      margin-top: 24px;
+
+    }
+
+
+
+    body.dark .ai-chat-box {
+
+      background: rgba(24,119,242,0.15);
+
+    }
+
+
+
+    .ai-messages {
+
+      height: 300px;
+
+      overflow-y: auto;
+
+      margin-bottom: 12px;
+
+    }
+
+
+
+    .ai-message {
+
+      margin-bottom: 12px;
+
+      padding: 10px 14px;
+
+      border-radius: 18px;
+
+      max-width: 85%;
+
+    }
+
+
+
+    .ai-message.user {
+
+      background: var(--blue);
+
+      color: white;
+
+      align-self: flex-end;
+
+    }
+
+
+
+    .ai-message.bot {
+
+      background: #e4e6eb;
+
+      color: var(--text);
+
+      align-self: flex-start;
+
+    }
+
+
+
+    body.dark .ai-message.bot {
+
+      background: #3a3b3c;
+
+    }
+
+
+
+    .ai-input-area {
+
+      display: flex;
+
+      gap: 8px;
+
+    }
+
+
+
+    .ai-input-area input {
+
+      flex: 1;
+
+      padding: 12px 16px;
+
+      border: 1px solid var(--border);
+
+      border-radius: 50px;
+
+      outline: none;
+
+    }
+
+
+
+    body.dark .ai-input-area input {
+
+      border-color: var(--dark-border);
+
+      background: #3a3b3c;
+
+      color: var(--dark-text);
+
+    }
+
+
+
+    .ai-send-btn {
+
+      width: 48px;
+
+      height: 48px;
+
+      border-radius: 50%;
+
+      background: var(--blue);
+
+      color: white;
+
+      border: none;
+
+      cursor: pointer;
+
+    }
+
+
+
+    /* Floating Chat Popup */
+
+    .chat-popup {
+
+      position: fixed;
+
+      bottom: 20px;
+
+      left: 20px;
+
+      width: 360px;
+
+      height: 480px;
+
+      background: var(--card);
+
+      border-radius: 16px 16px 0 0;
+
+      box-shadow: 0 10px 40px rgba(0,0,0,0.25);
+
+      display: none;
+
+      flex-direction: column;
+
+      z-index: 999;
+
+    }
+
+
+
+    .chat-popup.active {
+
+      display: flex;
+
+    }
+
+
+
+    body.dark .chat-popup {
+
+      background: var(--dark-card);
+
+    }
+
+
+
+    .chat-header {
+
+      background: var(--blue);
+
+      color: white;
+
+      padding: 12px;
+
+      border-radius: 16px 16px 0 0;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+    }
+
+
+
+    .chat-body {
+
+      flex: 1;
+
+      padding: 16px;
+
+      overflow-y: auto;
+
+    }
+
+
+
+    .chat-message {
+
+      margin-bottom: 12px;
+
+      padding: 10px 14px;
+
+      border-radius: 18px;
+
+      max-width: 80%;
+
+    }
+
+
+
+    .chat-message.sent {
+
+      background: var(--blue);
+
+      color: white;
+
+      align-self: flex-end;
+
+      margin-left: auto;
+
+    }
+
+
+
+    .chat-message.received {
+
+      background: #e4e6eb;
+
+      color: var(--text);
+
+    }
+
+
+
+    body.dark .chat-message.received {
+
+      background: #3a3b3c;
+
+    }
+
+
+
+    .chat-input {
+
+      display: flex;
+
+      padding: 12px;
+
+      background: var(--card);
+
+      border-top: 1px solid var(--border);
+
+      gap: 8px;
+
+    }
+
+
+
+    body.dark .chat-input {
+
+      background: var(--dark-card);
+
+      border-top: 1px solid var(--dark-border);
+
+    }
+
+
+
+    .chat-input input {
+
+      flex: 1;
+
+      padding: 10px 16px;
+
+      border: 1px solid var(--border);
+
+      border-radius: 50px;
+
+      outline: none;
+
+    }
+
+
+
+    .chat-send {
+
+      width: 40px;
+
+      height: 40px;
+
+      border-radius: 50%;
+
+      background: var(--blue);
+
+      color: white;
+
+      border: none;
+
+      cursor: pointer;
+
+    }
+
+
+
+    /* Additional Styles for Graphing Canvas */
+
+    #graphCanvas {
+
+      width: 100%;
+
+      height: 300px;
+
+      border: 1px solid var(--border);
+
+      border-radius: 8px;
+
+      background: white;
+
+      margin-top: 16px;
+
+    }
+
+
+
+    body.dark #graphCanvas {
+
+      background: #242526;
+
+      border-color: var(--dark-border);
+
+    }
+
+
+
+    /* Calculator Buttons Grid */
+
+    .calc-buttons {
+
+      display: grid;
+
+      grid-template-columns: repeat(5, 1fr);
+
+      gap: 8px;
+
+      margin-top: 16px;
+
+    }
+
+
+
+    .calc-buttons button {
+
+      padding: 12px;
+
+      font-size: 16px;
+
+      border: none;
+
+      border-radius: 8px;
+
+      background: #f0f2f5;
+
+      cursor: pointer;
+
+      transition: all 0.3s ease;
+
+    }
+
+
+
+    body.dark .calc-buttons button {
+
+      background: #3a3b3c;
+
+      color: var(--dark-text);
+
+    }
+
+
+
+    .calc-buttons button:hover {
+
+      background: var(--golden);
+
+      color: black;
+
+    }
+
+
+
+    .calc-buttons button.operator {
+
+      background: rgba(24,119,242,0.15);
+
+      color: var(--blue);
+
+    }
+
+
+
+    .calc-buttons button.equals {
+
+      background: var(--golden);
+
+      color: black;
+
+      grid-column: span 2;
+
+    }
+
+
+
+    /* Responsive Design */
+
+    @media (max-width: 1200px) {
+
+      .app-container {
+
+        flex-direction: column;
+
+      }
+
+
+
+      .left-sidebar, .right-panel {
+
+        width: 100%;
+
+        height: auto;
+
+        border: none;
+
+      }
+
+
+
+      .center-feed {
+
+        max-width: 100%;
+
+      }
+
+
+
+      .chat-popup {
+
+        left: 10px;
+
+        right: 10px;
+
+        width: auto;
+
+        height: 60vh;
+
+        bottom: 10px;
+
+      }
+
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+
+
+  <!-- TOP NAVIGATION - Only this part changed -->
+
+  <div class="top-nav">
+    <div class="logo">Nistbook</div>
+
+    <div class="nav-icons">
+      <a href="Firstpage.html" class="active"><i class="fas fa-home"></i></a>
+      <a href="reelpage.html"><i class="fas fa-play-circle"></i></a>
+      <a href="grouppage.html"><i class="fas fa-users"></i></a>
+      <a href="marketplacepage.html"><i class="fas fa-shopping-bag"></i></a> <!-- NEW: Marketplace -->
+      <a href="profilepage.html" title="Profile Page"><i class="fas fa-user"></i></a>
+      <a href="settingpage.html"><i class="fas fa-cog"></i></a>
+    </div>
+
+    <div class="right-icons">
+      <div class="icon-btn"><i class="fas fa-bell"></i></div>
+      <div class="icon-btn"><i class="fas fa-comment-dots"></i></div>
+      <div class="icon-btn" id="darkToggle"><i class="fas fa-moon"></i></div>
+    </div>
+  </div>
+
+
+
+  <!-- EVERYTHING BELOW THIS LINE IS 100% UNCHANGED FROM YOUR ORIGINAL CODE -->
+
+  <!-- MAIN LAYOUT -->
+
+  <div class="app-container">
+
+    <!-- Left Sidebar -->
+
+    <aside class="left-sidebar">
+
+      <div class="sidebar-title">Messages</div>
+
+      <div class="chat-item" onclick="openChat('Teacher Raj', 'https://randomuser.me/api/portraits/men/45.jpg')">
+
+        <img class="chat-avatar" src="https://randomuser.me/api/portraits/men/45.jpg" alt="">
+
+        <div>
+
+          <div class="chat-name">Teacher Raj</div>
+
+          <div class="chat-preview">New assignment posted</div>
+
+        </div>
+
+      </div>
+
+      <div class="chat-item" onclick="openChat('Sita Thapa', 'https://randomuser.me/api/portraits/women/23.jpg')">
+
+        <img class="chat-avatar" src="https://randomuser.me/api/portraits/women/23.jpg" alt="">
+
+        <div>
+
+          <div class="chat-name">Sita Thapa</div>
+
+          <div class="chat-preview">Sent you physics notes</div>
+
+        </div>
+
+      </div>
+
+
+
+      <div class="sidebar-title">Video Call Rooms</div>
+
+      <div class="chat-item" onclick="alert('Joining Physics Live Call...')">
+
+        <i class="fas fa-video" style="font-size:40px;color:var(--golden);margin-right:16px;"></i>
+
+        <div>
+
+          <div class="chat-name">Physics Live</div>
+
+          <div class="chat-preview">Join • 15 online</div>
+
+        </div>
+
+      </div>
+
+    </aside>
+
+
+
+    <!-- Center Feed -->
+
+    <main class="center-feed">
+
+      <div class="stories-container">
+
+        <div class="story">
+
+          <img src="https://picsum.photos/112/200?random=1" alt="">
+
+          <div class="story-name">Add Story</div>
+
+        </div>
+
+        <div class="story">
+
+          <img src="https://picsum.photos/112/200?random=2" alt="">
+
+          <div class="story-name">Physics Tips</div>
+
+        </div>
+
+        <div class="story">
+
+          <img src="https://picsum.photos/112/200?random=3" alt="">
+          <div class="story-name">Exam Motivation</div>
+        </div>
+            </div>
+
+      <div class="create-post">
+        <input class="create-input" type="text" placeholder="What's on your mind? Share notes, questions, reels...">
+      </div>
+
+      <div class="post">
+        <div class="post-header">
+          <img class="post-avatar" src="https://randomuser.me/api/portraits/women/68.jpg" alt="">
+          <div>
+            <strong>Priya Thapa</strong>
+            <div style="font-size:13px;color:var(--gray);">Grade 12 Science • 45m ago</div>
+          </div>
+        </div>
+        <p style="margin-bottom:16px;">Finally understood Quantum Mechanics! Who wants notes? 📚✨</p>
+        <img src="https://picsum.photos/600/400?random=15" style="width:100%;border-radius:12px;">
+        <div class="post-actions">
+          <span class="action-btn"><i class="fas fa-thumbs-up"></i> Like</span>
+          <span class="action-btn"><i class="fas fa-comment"></i> Comment</span>
+          <span class="action-btn"><i class="fas fa-share"></i> Share</span>
+        </div>
+      </div>
+
+      <!-- ... ALL YOUR OTHER POSTS REMAIN EXACTLY THE SAME ... -->
+    </main>
+
+    <!-- Right Panel -->
+    <aside class="right-panel">
+      <div class="right-title">Quick Tools & AI</div>
+
+      <div class="tools-grid">
+        <div class="tool-card" onclick="showTool('calculator')">
+          <i class="fas fa-calculator tool-icon"></i>
+          <div>Scientific Calc</div>
+        </div>
+        <div class="tool-card" onclick="showTool('graph')">
+          <i class="fas fa-chart-line tool-icon"></i>
+          <div>Graphing</div>
+        </div>
+        <div class="tool-card" onclick="showTool('timer')">
+          <i class="fas fa-clock tool-icon"></i>
+          <div>Timer</div>
+        </div>
+        <div class="tool-card" onclick="showTool('notes')">
+          <i class="fas fa-book tool-icon"></i>
+          <div>Notes</div>
+        </div>
+      </div>
+
+      <!-- Tool Panels (unchanged) -->
+  <div id="tool-calculator" class="tool-panel">
+    <span class="tool-close" onclick="hideAllTools()">×</span>
+    <h3>Scientific Calculator</h3>
+    <input type="text" id="calcInput" placeholder="e.g. sin(30) + log(100)" readonly>
+    <div class="calc-buttons">
+      <button onclick="calcAppend('7')">7</button>
+      <button onclick="calcAppend('8')">8</button>
+      <button onclick="calcAppend('9')">9</button>
+      <button onclick="calcAppend('/')">/</button>
+      <button onclick="calcAppend('Math.sin(')">sin</button>
+      <button onclick="calcAppend('4')">4</button>
+      <button onclick="calcAppend('5')">5</button>
+      <button onclick="calcAppend('6')">6</button>
+      <button onclick="calcAppend('*')">×</button>
+      <button onclick="calcAppend('Math.cos(')">cos</button>
+      <button onclick="calcAppend('1')">1</button>
+      <button onclick="calcAppend('2')">2</button>
+      <button onclick="calcAppend('3')">3</button>
+      <button onclick="calcAppend('-')">-</button>
+      <button onclick="calcAppend('Math.tan(')">tan</button>
+      <button onclick="calcAppend('0')">0</button>
+      <button onclick="calcAppend('.')">.</button>
+      <button onclick="calcClear()">C</button>
+      <button onclick="calcAppend('+')">+</button>
+      <button onclick="calcAppend('Math.log10(')">log</button>
+      <button onclick="calcAppend('Math.sqrt(')">√</button>
+      <button onclick="calcAppend('Math.exp(')">e^x</button>
+      <button onclick="calcAppend('Math.pow(')">^</button>
+      <button onclick="calcAppend('Math.PI')">π</button>
+      <button onclick="calcAppend('Math.E')">e</button>
+      <button onclick="calcResult()" class="equals">=</button>
+    </div>
+    <p id="calcResult" style="margin-top:16px;font-size:1.4rem;font-weight:bold;text-align:right;"></p>
+  </div>
+
+  <div id="tool-graph" class="tool-panel">
+    <span class="tool-close" onclick="hideAllTools()">×</span>
+    <h3>Graphing Calculator</h3>
+    <input type="text" id="graphInput" placeholder="e.g. x^2, sin(x), 2*x + 1">
+    <button onclick="drawGraph()">Graph</button>
+    <canvas id="graphCanvas" width="320" height="320"></canvas>
+  </div>
+
+  <div id="tool-timer" class="tool-panel">
+    <span class="tool-close" onclick="hideAllTools()">×</span>
+    <h3>Timer</h3>
+    <input type="number" id="timerMin" placeholder="Minutes" value="25">
+    <button onclick="startTimer()">Start</button>
+    <p id="timerDisplay">00:00</p>
+  </div>
+
+  <div id="tool-notes" class="tool-panel">
+    <span class="tool-close" onclick="hideAllTools()">×</span>
+    <h3>Notes</h3>
+    <textarea id="noteText" rows="6" placeholder="Write your notes..."></textarea>
+    <button onclick="saveNote()">Save</button>
+  </div>
+
+  <!-- AI Chat -->
+  <div class="ai-chat-box">
+    <div class="ai-messages" id="aiMessages">
+      <div class="ai-message bot">Hey! How can I help you study today?</div>
+    </div>
+    <div class="ai-input-area">
+      <input type="text" id="aiInput" placeholder="Ask AI anything...">
+      <button class="ai-send-btn" id="aiSend"><i class="fas fa-paper-plane"></i></button>
+    </div>
+  </div>
+</aside>  </div>
+
+  <!-- Floating Chat Popup -->
+  <div class="chat-popup" id="chatPopup">
+    <div class="chat-header">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <img id="chatAvatar" src="" style="width:40px;height:40px;border-radius:50%;">
+        <strong id="chatName"></strong>
+      </div>
+      <i class="fas fa-times" style="cursor:pointer;" onclick="closeChat()"></i>
+    </div>
+    <div class="chat-body" id="chatBody">
+      <div class="chat-message received">Hey! How are you?</div>
+    </div>
+    <div class="chat-input">
+      <input type="text" id="chatInput" placeholder="Type a message...">
+      <button class="chat-send" onclick="sendChatMessage()"><i class="fas fa-paper-plane"></i></button>
+    </div>
+  </div>
+
+  <script>
+   // Dark Mode Toggle
+    document.getElementById('darkToggle').addEventListener('click', function() {
+      document.body.classList.toggle('dark');
+      const icon = this.querySelector('i');
+      icon.classList.toggle('fa-moon');
+      icon.classList.toggle('fa-sun');
+
+    });
+    // Messenger Chat Popup
+    function openChat(name, avatar) {
+      document.getElementById('chatName').textContent = name;
+      document.getElementById('chatAvatar').src = avatar;
+      document.getElementById('chatPopup').style.display = 'flex';
+    }
+
+    function closeChat() {
+      document.getElementById('chatPopup').style.display = 'none';
+    }
+
+    function sendChatMessage() {
+      const input = document.getElementById('chatInput');
+      if (!input.value.trim()) return;
+
+      const msg = document.createElement('div');
+      msg.className = 'chat-message sent';
+      msg.textContent = input.value;
+      document.getElementById('chatBody').appendChild(msg);
+      document.getElementById('chatBody').scrollTop = document.getElementById('chatBody').scrollHeight;
+      input.value = '';
+    }
+
+    // AI Chat
+    const aiMessages = document.getElementById('aiMessages');
+    const aiInput = document.getElementById('aiInput');
+    const aiSend = document.getElementById('aiSend');
+
+    aiSend.addEventListener('click', sendAIMessage);
+    aiInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') sendAIMessage();
+    });
+
+    function sendAIMessage() {
+      const text = aiInput.value.trim();
+      if (!text) return;
+      const msg = document.createElement('div');
+      msg.className = 'ai-message user';
+      msg.textContent = text;
+      aiMessages.appendChild(msg);
+      aiMessages.scrollTop = aiMessages.scrollHeight;
+      aiInput.value = '';
+
+      setTimeout(() => {
+        const reply = document.createElement('div');
+        reply.className = 'ai-message bot';
+        reply.textContent = "Nist AI: Got it! How else can I help?";
+        aiMessages.appendChild(reply);
+        aiMessages.scrollTop = aiMessages.scrollHeight;
+      }, 800);
+    }
+
+    // Quick Tools Panels
+    function showTool(toolId) {
+      document.querySelectorAll('.tool-panel').forEach(p => p.style.display = 'none');
+      document.getElementById(`tool-${toolId}`).style.display = 'block';
+    }
+
+    // Scientific Calculator Functions
+    function calcAppend(value) {
+      document.getElementById('calcInput').value += value;
+    }
+
+    function calcClear() {
+      document.getElementById('calcInput').value = '';
+      document.getElementById('calcResult').textContent = '';
+    }
+
+    function calcResult() {
+      let expr = document.getElementById('calcInput').value;
+      try {
+        expr = expr.replace(/sin/g, 'Math.sin');
+        expr = expr.replace(/cos/g, 'Math.cos');
+        expr = expr.replace(/tan/g, 'Math.tan');
+        expr = expr.replace(/log/g, 'Math.log10');
+        expr = expr.replace(/sqrt/g, 'Math.sqrt');
+        expr = expr.replace(/exp/g, 'Math.exp');
+        expr = expr.replace(/π/g, 'Math.PI');
+        expr = expr.replace(/e/g, 'Math.E');
+        const result = eval(expr);
+        document.getElementById('calcResult').textContent = `= ${result.toFixed(6)}`;
+      } catch {
+        document.getElementById('calcResult').textContent = "Error";
+      }
+    }
+
+    // Graphing Calculator
+    function drawGraph() {
+      const func = document.getElementById('graphInput').value;
+      const canvas = document.getElementById('graphCanvas');
+      const ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.strokeStyle = '#1877f2';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(0, canvas.height / 2);
+      for (let x = 0; x < canvas.width; x++) {
+        try {
+          let y = eval(func.replace(/x/g, `(${x - canvas.width/2}/40)`));
+          y = canvas.height / 2 - y * 40;
+          ctx.lineTo(x, y);
+        } catch {}
+      }
+      ctx.stroke();
+    }
+
+    // Timer
+    let timerInterval;
+    function startTimer() {
+      clearInterval(timerInterval);
+      let time = parseInt(document.getElementById('timerMin').value) * 60;
+      if (!time) return alert("Enter minutes!");
+      timerInterval = setInterval(() => {
+        time--;
+        const min = Math.floor(time / 60);
+        const sec = time % 60;
+        document.getElementById('timerDisplay').textContent = `${min}:${sec < 10 ? '0' : ''}${sec}`;
+        if (time <= 0) {
+          clearInterval(timerInterval);
+          alert("Time's up!");
+        }
+      }, 1000);
+    }
+
+    // Notes
+    function saveNote() {
+      const text = document.getElementById('noteText').value;
+      if (text.trim()) {
+      localStorage.setItem('nistNote', text);
+        alert("Note saved!");
+      } else {
+        alert("Write something first!");
+      }
+    }
+
+    // Unit Converter
+    function convertUnit() {
+      const val = parseFloat(document.getElementById('convValue').value);
+      if (isNaN(val)) return;
+      const result = (val * 0.393701).toFixed(2);
+      document.getElementById('convResult').textContent = `${val} cm = ${result} inches`;
+    }
+    function hideAllTools() {
+      document.querySelectorAll('.tool-panel').forEach(p => p.style.display = 'none');
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nistbook | Log In</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+    <style>
+        :root {
+            --primary-yellow: #59c055;
+            --primary-yellow-dark: #e6c200;
+            --secondary-green: #4CAF50;
+            --error-red: #ff4d4d;
+            --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: var(--bg-gradient);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 1100px;
+            gap: 60px;
+        }
+
+        /* Branding - Left Side */
+        .branding {
+            flex: 1;
+            max-width: 520px;
+        }
+
+        .branding h1 {
+            font-size: 4.8rem;
+            font-weight: 900;
+            color: var(--primary-yellow);
+            text-shadow: 0 2px 10px rgba(255,215,0,0.4);
+            margin-bottom: 12px;
+            letter-spacing: -2px;
+        }
+
+        .branding p {
+            font-size: 1.5rem;
+            color: #444;
+            line-height: 1.5;
+            font-weight: 400;
+        }
+
+        /* Login Card - Right Side */
+        .login-card {
+            flex: 1;
+            max-width: 420px;
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 20px;
+            padding: 48px 40px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(255,255,255,0.3);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .login-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+        }
+
+        h2 {
+            font-size: 2.2rem;
+            color: var(--primary-yellow);
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .subtitle {
+            color: #666;
+            text-align: center;
+            margin-bottom: 32px;
+            font-size: 1rem;
+        }
+
+        /* Form Styling */
+        .form-group {
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        input {
+            width: 100%;
+            padding: 16px 20px;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--primary-yellow);
+            box-shadow: 0 0 0 3px rgba(255,215,0,0.25);
+        }
+
+        .password-wrapper {
+            position: relative;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #777;
+            font-size: 1.3rem;
+        }
+
+        .error {
+            color: var(--error-red);
+            font-size: 0.9rem;
+            margin-top: 6px;
+            display: none;
+        }
+
+        /* Buttons */
+        .btn {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 12px 0;
+        }
+
+        .btn-primary {
+            background: var(--primary-yellow);
+            color: #000;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-yellow-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-google {
+            background: #4285F4;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .btn-google:hover {
+            background: #357ae8;
+        }
+
+        .link {
+            color: var(--primary-yellow);
+            text-decoration: none;
+            font-weight: 600;
+            display: block;
+            text-align: center;
+            margin-top: 16px;
+        }
+
+        .link:hover {
+            text-decoration: underline;
+        }
+
+        hr {
+            border: none;
+            height: 1px;
+            background: #ddd;
+            margin: 32px 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .container {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .branding {
+                max-width: 100%;
+                margin-bottom: 40px;
+            }
+
+            .login-card {
+                max-width: 420px;
+            }
+
+            .branding h1 {
+                font-size: 3.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Branding -->
+        <div class="branding">
+            <h1>Nistbook</h1>
+            <p>Connect with friends, share notes, join live classes, and grow together.</p>
+        </div>
+
+        <!-- Login Card -->
+        <div class="login-card">
+            <h2>Welcome Back</h2>
+            <p class="subtitle">Log in to continue your learning journey</p>
+
+            <form id="loginForm">
+                <div class="form-group">
+                    <input type="text" id="username" placeholder="Email, Phone or Student ID" required>
+                </div>
+
+                <div class="form-group password-wrapper">
+                    <input type="password" id="password" placeholder="Password" required>
+                    <span class="toggle-password" onclick="togglePassword()">👁️</span>
+                </div>
+
+                <div class="error" id="errorMsg"></div>
+
+                <button type="submit" class="btn btn-primary">Log In</button>
+            </form>
+
+            <a href="#" class="link">Forgot password?</a>
+
+            <hr>
+
+            <button class="btn btn-google" onclick="alert('Google Login coming soon!')">
+                <i class="fab fa-google"></i> Continue with Google
+            </button>
+
+            <p class="link">
+    Don't have an account? 
+    <a href="registerpage.html">Sign Up</a>
+</p>
+
+        </div>
+    </div>
+
+   <script>
+    function togglePassword() {
+        const password = document.getElementById('password');
+        const icon = document.querySelector('.toggle-password');
+        if (password.type === 'password') {
+            password.type = 'text';
+            icon.textContent = '🙈';
+        } else {
+            password.type = 'password';
+            icon.textContent = '👁️';
+        }
+    }
+
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const username = document.getElementById('username').value.trim();
+        const password = document.getElementById('password').value.trim();
+        const error = document.getElementById('errorMsg');
+
+        if (!username || !password) {
+            error.textContent = "Please fill in all fields";
+            error.style.display = 'block';
+            return;
+        }
+
+        error.style.display = 'none';
+
+        // Redirect to Firstpage.html after successful login
+        window.location.href = 'Firstpage.html';
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Nistbook | Settings</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    :root {
+      --golden: #ffd700;
+      --blue: #1877f2;
+      --bg: #f0f2f5;
+      --dark-bg: #18191a;
+      --dark-card: rgba(36,37,38,0.8);
+      --dark-text: #e4e6eb;
+      --gray: #606770;
+    }
+    body { margin:0; font-family:system-ui; background:var(--bg); color:var(--gray); }
+    body.dark { background:var(--dark-bg); color:var(--dark-text); }
+
+    /* Top Nav */
+    .top-nav {
+      position:fixed; top:0; left:0; right:0; height:64px;
+      backdrop-filter: blur(10px);
+      background:rgba(255,255,255,0.7);
+      display:flex; justify-content:space-between; align-items:center;
+      padding:0 24px; box-shadow:0 2px 12px rgba(0,0,0,0.08); z-index:1000;
+    }
+    body.dark .top-nav { background:rgba(36,37,38,0.7); }
+    .logo { font-size:28px; font-weight:900; color:var(--golden); }
+    .nav-icons { display:flex; gap:28px; }
+    .nav-icons a { font-size:22px; color:var(--gray); text-decoration:none; padding:8px 10px; border-radius:8px; transition:.2s ease; }
+    body.dark .nav-icons a { color:var(--dark-text); }
+    .nav-icons a:hover, .nav-icons a.active { background:linear-gradient(90deg,var(--golden),var(--blue)); color:#000; }
+    .right-icons { display:flex; gap:16px; }
+    .icon-btn { width:40px; height:40px; border-radius:50%; display:grid; place-items:center; background:rgba(255,255,255,0.6); cursor:pointer; transition:.2s ease; }
+    body.dark .icon-btn { background:rgba(58,59,60,0.6); color:var(--dark-text); }
+    .icon-btn:hover { background:var(--golden); color:#000; transform:scale(1.1); }
+
+    /* Center Feed */
+    .center-feed { margin-top:64px; max-width:800px; margin:auto; padding:32px 20px; }
+
+    /* Title Box */
+    .title-box {
+      background: linear-gradient(270deg,var(--golden),var(--blue),var(--golden));
+      background-size: 600% 600%;
+      animation: gradientMove 12s ease infinite;
+      border-radius: 14px;
+      padding: 24px;
+      margin-bottom: 32px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+      text-align: center;
+      color:#000;
+    }
+    @keyframes gradientMove {
+      0%{background-position:0% 50%}
+      50%{background-position:100% 50%}
+      100%{background-position:0% 50%}
+    }
+    body.dark .title-box { color:var(--dark-text); }
+    .title-box h1 { margin:0; font-size:28px; font-weight:800; }
+    .title-box p { margin-top:8px; font-size:15px; }
+
+    /* Settings Cards */
+    .settings-grid { display:grid; gap:20px; }
+    .setting-card {
+      backdrop-filter: blur(10px);
+      background:rgba(255,255,255,0.8);
+      border-radius:14px; padding:20px;
+      box-shadow:0 2px 12px rgba(0,0,0,0.08);
+    }
+    body.dark .setting-card { background:var(--dark-card); }
+    .setting-card h3 { margin:0 0 12px; color:var(--blue); }
+    .setting-card label { display:block; margin-bottom:8px; }
+    .setting-card input[type="checkbox"], .setting-card input[type="radio"] { margin-right:8px; }
+    .save-btn, .logout-btn {
+      background:var(--blue); color:#fff; border:none; padding:10px 16px;
+      border-radius:8px; font-weight:600; cursor:pointer; transition:.2s ease;
+      margin-top:12px;
+    }
+    .save-btn:hover { background:#145dbf; }
+    .logout-btn { background:#d9534f; }
+    .logout-btn:hover { background:#c9302c; }
+  </style>
+</head>
+<body>
+
+  <!-- Top Nav -->
+  <div class="top-nav">
+    <div class="logo">Nistbook</div>
+    <div class="nav-icons">
+      <a href="Firstpage.html"><i class="fas fa-home"></i></a>
+      <a href="reelpage.html"><i class="fas fa-play-circle"></i></a>
+      <a href="groupfriends.html"><i class="fas fa-users"></i></a>
+      <a href="marketplacepage.html"><i class="fas fa-shopping-bag"></i></a>
+      <a href="profilepage.html"><i class="fas fa-user"></i></a>
+      <a href="settings.html" class="active"><i class="fas fa-cog"></i></a>
+    </div>
+    <div class="right-icons">
+      <div class="icon-btn"><i class="fas fa-bell"></i></div>
+      <div class="icon-btn"><i class="fas fa-comment-dots"></i></div>
+      <div class="icon-btn" id="darkToggle"><i class="fas fa-moon"></i></div>
+    </div>
+  </div>
+
+  <!-- Settings Content -->
+  <main class="center-feed">
+
+    <!-- Title Box -->
+    <div class="title-box">
+      <h1>Settings</h1>
+      <p>Manage your preferences and account</p>
+    </div>
+
+    <!-- Settings Grid -->
+    <div class="settings-grid">
+      <div class="setting-card">
+        <h3>Appearance</h3>
+        <label><input type="checkbox" id="darkMode"> Enable Dark Mode</label>
+      </div>
+
+      <div class="setting-card">
+        <h3>Notifications</h3>
+        <label><input type="checkbox" checked> Email Alerts</label>
+        <label><input type="checkbox"> Push Notifications</label>
+        <label><input type="checkbox"> SMS Alerts</label>
+      </div>
+
+      <div class="setting-card">
+        <h3>Privacy</h3>
+        <label><input type="checkbox"> Show profile to classmates only</label>
+        <label><input type="checkbox"> Hide online status</label>
+        <label><input type="checkbox"> Allow search by email</label>
+      </div>
+
+      <div class="setting-card">
+        <h3>Language</h3>
+        <label><input type="radio" name="lang" checked> English</label>
+        <label><input type="radio" name="lang"> Nepali</label>
+        <label><input type="radio" name="lang">Duch</label>
+      </div>
+
+      <div class="setting-card">
+        <h3>Account Security</h3>
+        <label>Change Password</label>
+        <input type="password" placeholder="New Password" style="padding:8px; border-radius:6px; border:1px solid #ccc; width:100%; margin-bottom:8px;">
+        <input type="password" placeholder="Confirm Password" style="padding:8px; border-radius:6px; border:1px solid #ccc; width:100%;">
+      </div>
+
+      <div class="setting-card">
+  <h3>Logout</h3>
+  <p>End your current session securely.</p>
+  <button class="logout-btn" id="logoutBtn">
+    <i class="fas fa-sign-out-alt"></i> Logout
+  </button>
+</div>
+
+<script>
+  // Dark Mode Toggle (already in your page)
+  document.getElementById('darkToggle').addEventListener('click', function() {
+    document.body.classList.toggle('dark');
+    const icon = this.querySelector('i');
+    icon.classList.toggle('fa-moon');
+    icon.classList.toggle('fa-sun');
+    document.getElementById('darkMode').checked = document.body.classList.contains('dark');
+  });
+
+  // Sync dark mode checkbox
+  const darkModeCheckbox = document.getElementById('darkMode');
+  darkModeCheckbox.addEventListener('change', () => {
+    document.body.classList.toggle('dark', darkModeCheckbox.checked);
+    const icon = document.getElementById('darkToggle').querySelector('i');
+    if (darkModeCheckbox.checked) {
+      icon.classList.remove('fa-moon');
+      icon.classList.add('fa-sun');
+    } else {
+      icon.classList.remove('fa-sun');
+      icon.classList.add('fa-moon');
+    }
+  });
+
+  // Logout button logic
+  document.getElementById('logoutBtn').addEventListener('click', () => {
+    // Clear any local storage/session data if you use it
+    localStorage.clear();
+    sessionStorage.clear();
+
+    // Redirect to login page
+    window.location.href = "login.html";
+  });
+</script>
+</body>
+</html>
